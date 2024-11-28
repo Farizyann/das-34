@@ -6,6 +6,10 @@ export interface IUser {
     role: string;
     avatar: string;
   }
+export interface IUserLogin {
+    email: string;
+    password: string;
+  }
   
   export interface ICategory {
     id: number;

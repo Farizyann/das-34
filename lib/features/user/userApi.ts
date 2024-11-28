@@ -1,27 +1,64 @@
+import { IUserLogin } from "./../../../type/type";
 import { IUser } from "@/type/type";
-import axios from "axios"
+import axios from "axios";
 
 export const getUsersApi = async () => {
-    const { data } = await axios.get('https://api.escuelajs.co/api/v1/users')
-    return data;
-}
+  const { data } = await axios.get("https://api.escuelajs.co/api/v1/users");
+  return data;
+};
 
 export const getUserByIdApi = async (id: number) => {
-    const { data } = await axios.get('https://api.escuelajs.co/api/v1/users/' + id)
-    return data
-}
+  const { data } = await axios.get(
+    "https://api.escuelajs.co/api/v1/users/" + id
+  );
+  return data;
+};
+
+export const getUserProfileApi = async () => {
+  const { data } = await axios.get(
+    "https://api.escuelajs.co/api/v1/auth/profile",
+    {
+        headers:{
+            Authorization: "Bearer "+localStorage.token,
+          }
+    }
+  );
+  return data;
+};
 
 export const createUserApi = async (obj: IUser) => {
-    const { data } = await axios.post('https://api.escuelajs.co/api/v1/users/', obj)
-    return data
-}
+  const { data } = await axios.post(
+    "https://api.escuelajs.co/api/v1/users/",
+    obj
+  );
+  return data;
+};
 
-export const updateUserApi = async ({id, obj} : {id: number; obj: IUser}) => {
-    const {data} = await axios.put('https://api.escuelajs.co/api/v1/users/'+id, obj)
-    return data
-} 
+export const loginApi = async (obj: IUserLogin) => {
+  const { data } = await axios.post(
+    "https://api.escuelajs.co/api/v1/auth/login",
+    obj
+  );
+  return data;
+};
+
+export const updateUserApi = async ({
+  id,
+  obj,
+}: {
+  id: number;
+  obj: IUser;
+}) => {
+  const { data } = await axios.put(
+    "https://api.escuelajs.co/api/v1/users/" + id,
+    obj
+  );
+  return data;
+};
 
 export const deleteUserByIdApi = async (id: number) => {
-    const { data } = await axios.delete('https://api.escuelajs.co/api/v1/users/' + id)
-    return data
-}
+  const { data } = await axios.delete(
+    "https://api.escuelajs.co/api/v1/users/" + id
+  );
+  return data;
+};

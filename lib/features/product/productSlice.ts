@@ -1,15 +1,17 @@
 import { createAppSlice } from "@/lib/createAppSlice";
 import { IProduct } from "@/type/type";
-import { createProductApi, deleteProductByIdApi, getProductsApi, getProductsByIdApi, getProductsByCategoryApi, updateProductApi } from "./productApi";
+import { createProductApi, deleteProductByIdApi, getProductsApi, getProductsByIdApi, getProductsByCategoryApi, updateProductApi, paginationProductApi } from "./productApi";
 import { selectUsers } from "../user/userSlice";
 
 interface IState {
-    products: IProduct[]
+    products: IProduct[],
+    productsLimit: IProduct[],
     product: IProduct
 }
 
 const initialState: IState = {
     products: [],
+    productsLimit: [],
     product: {} as IProduct
 }
 
@@ -67,14 +69,20 @@ export const productSlice = createAppSlice({
                 return await deleteProductByIdApi(id)
             }
         ),
-        // paginationProductData: create.asyncThunk(
-        //     async ({offset, limit} : {offset: number, limit: number}) => {
-        //         return await paginationProductApi(offset, limit)
-        //     }
-        // )
+        paginationProductData: create.asyncThunk(
+            async ({offset, limit} : {offset: number, limit: number}) => {
+                return await paginationProductApi({offset, limit})
+            },
+            {
+                fulfilled:(state, action)=>{
+                    state.productsLimit = action.payload
+                }
+            }
+        )
     }),
     selectors: {
         selectProducts: (app) => app.products,
+        selectProductsLimit: (app) => app.productsLimit,
         selectProduct: (app) => app.product
     }
 })
@@ -85,8 +93,9 @@ export const {
     getProductsByCategoryData,
     createProductData,
     updateProductData,
-    deleteProductByIdData
+    deleteProductByIdData,
+    paginationProductData
 } = productSlice.actions;
 
-export const {selectProducts, selectProduct} = productSlice.selectors;
+export const {selectProducts, selectProduct, selectProductsLimit} = productSlice.selectors;
 

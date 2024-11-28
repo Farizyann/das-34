@@ -7,7 +7,6 @@ import styles from "../styles/layout.module.css";
 
 export const Nav = () => {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <nav className={styles.nav}>

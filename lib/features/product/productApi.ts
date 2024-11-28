@@ -35,7 +35,7 @@ export const deleteProductByIdApi = async (id: number) => {
     return data;
 };
 
-// export const paginationProductApi = async ({offset, limit} : {offset: number, limit: number}) => {
-//     const { data } = await axios.get(`https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${limit}`);
-//     return data;
-// };
+export const paginationProductApi = async ({offset, limit} : {offset: number, limit: number}) => {
+    const { data } = await axios.get(`https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${limit}`);
+    return data;
+};
